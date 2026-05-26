@@ -561,7 +561,7 @@ const TambahEvent = () => (
             Deskripsi Event
           </label>
           <textarea
-            rows="4"
+            rows={4}
             className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all font-medium"
             placeholder="Ceritakan detail menarik tentang event ini..."
             required

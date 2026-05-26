@@ -1,7 +1,12 @@
 "use client";
 import React, { useState } from "react";
 
-const Navbar = ({ currentPage, setCurrentPage }) => (
+interface NavbarProps {
+  currentPage: string;
+  setCurrentPage: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Navbar = ({ currentPage, setCurrentPage }: NavbarProps) => (
   <nav className="flex justify-between items-center p-6 lg:px-20 bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
     <div
       className="text-2xl font-black tracking-tighter text-emerald-600 cursor-pointer flex items-center gap-2"
@@ -641,7 +646,11 @@ const Tentang = () => (
   </div>
 );
 
-const Login = ({ setCurrentPage }) => (
+interface LoginProps {
+  setCurrentPage: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Login = ({ setCurrentPage }: LoginProps) => (
   <div className="animate-in slide-in-from-right-8 duration-500 min-h-screen flex bg-white">
     <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-20 relative">
       <button

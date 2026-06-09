@@ -287,7 +287,7 @@ const Home = ({ id }: { id: string }) => {
 };
 
 const Destinasi = ({ id }: { id: string }) => {
-  const ref = React.useRef(null);
+  const ref = React.useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]

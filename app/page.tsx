@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useCallback } from "react";
-import Particles from "react-tsparticles";
-import { loadSlim } from "tsparticles-slim";
 import { Typewriter } from "react-simple-typewriter";
+import Particles from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
+import { tsParticles } from "@tsparticles/engine";
 
 
 interface NavbarProps {
@@ -171,55 +172,65 @@ const Home = ({ id }: { id: string }) => {
   const textY = useTransform(scrollY, [0, 800], [0, -250]);
   const textOpacity = useTransform(scrollY, [0, 500], [1, 0]);
 
-  const particlesInit = useCallback(async (engine: any) => {
-    await loadSlim(engine);
+  const [init, setInit] = useState(false);
+
+  useEffect(() => {
+    // Mem-bypass error Turbopack dengan langsung me-load core tsParticles
+    loadSlim(tsParticles).then(() => {
+      setInit(true);
+    });
   }, []);
 
   return (
     <section id={id} className="relative min-h-screen overflow-hidden bg-white dark:bg-black transition-colors duration-500">
       <div className="absolute inset-0 z-0">
-        <Particles
-          id="tsparticles"
-          init={particlesInit}
-          options={{
-            background: { color: { value: "transparent" } },
-            fpsLimit: 120,
-            interactivity: {
-              events: {
-                onHover: { enable: true, mode: "grab" },
+        {init && (
+          <Particles
+            id="tsparticles"
+            options={{
+              background: { color: { value: "transparent" } },
+              fpsLimit: 120,
+              interactivity: {
+                events: {
+                  onHover: { enable: true, mode: "grab" },
+                },
+                modes: {
+                  grab: { distance: 150, links: { opacity: 0.8 } },
+                },
               },
-              modes: {
-                grab: { distance: 150, links: { opacity: 0.8 } },
+              particles: {
+                color: { value: ["#10b981", "#8b5cf6", "#eab308", "#0ea5e9"] },
+                links: {
+                  color: "#64748b",
+                  distance: 160,
+                  enable: true,
+                  opacity: 0.5,
+                  width: 1.5,
+                },
+                move: {
+                  direction: "none",
+                  enable: true,
+                  outModes: { default: "bounce" },
+                  random: false,
+                  speed: 1.5,
+                  straight: false,
+                },
+                number: {
+                  density: { 
+                    enable: true, 
+                    width: 1920, 
+                    height: 1080 
+                  },
+                  value: 60,
+                },
+                opacity: { value: 0.8 },
+                shape: { type: "circle" },
+                size: { value: { min: 5, max: 12 } },
               },
-            },
-            particles: {
-              color: { value: ["#10b981", "#8b5cf6", "#eab308", "#0ea5e9"] },
-              links: {
-                color: "#64748b",
-                distance: 160,
-                enable: true,
-                opacity: 0.5,
-                width: 1.5,
-              },
-              move: {
-                direction: "none",
-                enable: true,
-                outModes: { default: "bounce" },
-                random: false,
-                speed: 1.5,
-                straight: false,
-              },
-              number: {
-                density: { enable: true, area: 800 },
-                value: 60,
-              },
-              opacity: { value: 0.8 },
-              shape: { type: "circle" },
-              size: { value: { min: 5, max: 12 } },
-            },
-            detectRetina: true,
-          }}
-        />
+              detectRetina: true,
+            }}
+          />
+        )}
       </div>
 
       <motion.div
